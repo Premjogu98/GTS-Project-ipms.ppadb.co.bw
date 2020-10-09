@@ -75,6 +75,10 @@ def scrap_data(main_outerHTML,tender_no,tender_title):
             SegField[7] = 'BW'
             SegField[28] = 'https://ipms.ppadb.co.bw/login'
             SegField[31] = 'ipms.ppadb.co.bw'
+            SegField[20] = ""
+            SegField[21] = "" 
+            SegField[42] = SegField[7]
+            SegField[43] = "" 
 
             for SegIndex in range(len(SegField)):
                 print(SegIndex, end=' ')
@@ -91,8 +95,9 @@ def scrap_data(main_outerHTML,tender_no,tender_title):
             if SegField[19] == '':
                 wx.MessageBox(' Short Desc Blank ','ipms.ppadb.co.bw', wx.OK | wx.ICON_INFORMATION)
             else:
-                # check_date(get_htmlsource, SegField)
-                pass
+                check_date(main_outerHTML, SegField)
+                # pass
+                
             a = False
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -121,6 +126,8 @@ def check_date(get_htmlSource, SegField):
         else:
             print("Deadline Not Given")
             Global_var.deadline_Not_given += 1
+            wx.MessageBox(' Deadline Not Given ','ipms.ppadb.co.bw', wx.OK | wx.ICON_INFORMATION)
+            insert_in_Local(get_htmlSource, SegField)
     except Exception as e:
         exc_type , exc_obj , exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]

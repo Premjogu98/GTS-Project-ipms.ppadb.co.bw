@@ -16,7 +16,7 @@ import requests
 app = wx.App()
 
 def ChromeDriver():
-    browser = webdriver.Chrome(executable_path=str('F:\\chromedriver.exe'))
+    browser = webdriver.Chrome(executable_path=str('C:\\chromedriver.exe'))
     browser.maximize_window()
     browser.get("https://ipms.ppadb.co.bw/login#")
     time.sleep(3)
@@ -107,7 +107,7 @@ def navigation_things(details_list,browser):
                 break 
         scrap_data(main_outerHTML,tender_no,tender_title)
         print(f'Total: {str(len(details_list))} Deadline Not given: {Global_var.deadline_Not_given} duplicate: {Global_var.duplicate} inserted: {Global_var.inserted} expired: {Global_var.expired} QC Tenders: {Global_var.QC_Tenders}')
-
+        time.sleep(3)
     wx.MessageBox(f'Total: {str(len(details_list))}\nDeadline Not given: {Global_var.deadline_Not_given}\nduplicate: {Global_var.duplicate}\ninserted: {Global_var.inserted}\nexpired: {Global_var.expired}\nQC Tenders: {Global_var.QC_Tenders}','ipms.ppadb.co.bw', wx.OK | wx.ICON_INFORMATION)
     browser.close()
     sys.exit() 
