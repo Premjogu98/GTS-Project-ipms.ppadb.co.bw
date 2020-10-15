@@ -19,7 +19,7 @@ def remove_html_tag(string):
 def scrap_data(main_outerHTML,tender_no,tender_title):
 
     SegField = []
-    for data in range(42):
+    for data in range(45):
         SegField.append('')
     
     a = True
