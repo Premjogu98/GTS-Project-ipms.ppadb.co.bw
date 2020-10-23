@@ -96,7 +96,7 @@ def scrap_data(main_outerHTML,tender_no,tender_title):
                 wx.MessageBox(' Short Desc Blank ','ipms.ppadb.co.bw', wx.OK | wx.ICON_INFORMATION)
             else:
                 check_date(main_outerHTML, SegField)
-                # pass
+                pass
                 
             a = False
         except Exception as e:
