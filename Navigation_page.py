@@ -43,8 +43,12 @@ def ChromeDriver():
             Deadline = datetime.today() + timedelta(days=2)
             Deadline = Deadline.strftime('%d/%m/%Y')
         if Deadline != "" :
-            datetime_object = datetime.strptime(Deadline, '%d/%m/%Y %H:%M')
-            Deadline = datetime_object.strftime("%d-%m-%Y")
+            try:
+                datetime_object = datetime.strptime(Deadline, '%d/%m/%Y %H:%M')
+                Deadline = datetime_object.strftime("%d-%m-%Y")
+            except:
+                datetime_object = datetime.strptime(Deadline, '%d/%m/%Y')
+                Deadline = datetime_object.strftime("%d-%m-%Y")
 
             datetime_object_pub = datetime.strptime(Deadline, '%d-%m-%Y')
             User_Selected_date = datetime.strptime(str(Global_var.From_Date), '%d-%m-%Y')
