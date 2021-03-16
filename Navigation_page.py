@@ -16,7 +16,7 @@ import requests
 app = wx.App()
 
 def ChromeDriver():
-    browser = webdriver.Chrome(executable_path=str('C:\\chromedriver.exe'))
+    browser = webdriver.Chrome(executable_path=str('C:\\Translation EXE\\chromedriver.exe'))
     browser.maximize_window()
     browser.get("https://ipms.ppadb.co.bw/login#")
     time.sleep(3)
@@ -33,7 +33,10 @@ def ChromeDriver():
             pass
         
         if 'No records' in No_records:
-            navigation_things(details_list,browser)
+            wx.MessageBox(f'Total: {str(len(details_list))}\nDeadline Not given: {Global_var.deadline_Not_given}\nduplicate: {Global_var.duplicate}\ninserted: {Global_var.inserted}\nexpired: {Global_var.expired}\nQC Tenders: {Global_var.QC_Tenders}','ipms.ppadb.co.bw', wx.OK | wx.ICON_INFORMATION)
+            browser.close()
+            time.sleep(2)
+            sys.exit() 
             a = False
         Deadline = ''
         for Deadline in browser.find_elements_by_xpath(f'//*[@id="flexi"]/tbody/tr[{str(count)}]//td[3]/div'):
@@ -74,7 +77,7 @@ def ChromeDriver():
                 details_list.append(test_list)
                 a = True
             else:
-                navigation_things(details_list,browser)
+                navigation_things(details_list,browser,Deadline)
                 a = False
             if count == 10:
                 for next_page in browser.find_elements_by_xpath('//*[@id="next"]'):
@@ -95,7 +98,7 @@ def ChromeDriver():
                 break
             time.sleep(5)
 
-def navigation_things(details_list,browser):
+def navigation_things(details_list,browser,Deadline):
     for inside_details_list in details_list:
         tender_no = inside_details_list[0]
         tender_title = inside_details_list[1]
@@ -109,7 +112,7 @@ def navigation_things(details_list,browser):
                 href_outerHTML = href_outerHTML.get_attribute('outerHTML').strip().replace('</body>','').replace('<body>','').replace('href="v','href="https://ipms.ppadb.co.bw/v').replace('\n','').replace('\t','').replace('-----','')
                 main_outerHTML += href_outerHTML
                 break 
-        scrap_data(main_outerHTML,tender_no,tender_title)
+        scrap_data(main_outerHTML,tender_no,tender_title,Deadline)
         print(f'Total: {str(len(details_list))} Deadline Not given: {Global_var.deadline_Not_given} duplicate: {Global_var.duplicate} inserted: {Global_var.inserted} expired: {Global_var.expired} QC Tenders: {Global_var.QC_Tenders}')
         time.sleep(3)
     wx.MessageBox(f'Total: {str(len(details_list))}\nDeadline Not given: {Global_var.deadline_Not_given}\nduplicate: {Global_var.duplicate}\ninserted: {Global_var.inserted}\nexpired: {Global_var.expired}\nQC Tenders: {Global_var.QC_Tenders}','ipms.ppadb.co.bw', wx.OK | wx.ICON_INFORMATION)

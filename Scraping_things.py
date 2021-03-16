@@ -16,7 +16,7 @@ def remove_html_tag(string):
     main_string = re.sub(cleanr, '', string)
     return main_string
 
-def scrap_data(main_outerHTML,tender_no,tender_title):
+def scrap_data(main_outerHTML,tender_no,tender_title,outer_Deadline):
 
     SegField = []
     for data in range(45):
@@ -39,9 +39,14 @@ def scrap_data(main_outerHTML,tender_no,tender_title):
             deadline = scrap_outerHTML.partition('Bid Re-encryption/Bid Submission</td>')[2].partition("</tr>")[0].strip()
             deadline = deadline.partition('</td>')[2].partition("</td>")[0].strip()
             deadline = remove_html_tag(deadline)
-            deadline = datetime.strptime(str(deadline).strip(), "%d/%m/%Y %H:%M %p")
-            main_deadline = deadline.strftime("%Y-%m-%d")
-            SegField[24] = main_deadline
+            try:
+                deadline = datetime.strptime(str(deadline).strip(), "%d/%m/%Y %H:%M %p")
+                main_deadline = deadline.strftime("%Y-%m-%d")
+                SegField[24] = main_deadline
+            except:
+                deadline = datetime.strptime(str(outer_Deadline).strip(), "%d-%m-%Y")
+                main_deadline = deadline.strftime("%Y-%m-%d")
+                SegField[24] = main_deadline
 
             Department = scrap_outerHTML.partition('Procuring Department :</strong>')[2].partition("</span>")[0].strip()
             Department = Department.upper()
